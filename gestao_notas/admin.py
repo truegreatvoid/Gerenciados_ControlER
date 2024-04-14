@@ -4,6 +4,8 @@ from .models import Emitente, Destinatario, Produto, Nota, ItemNota, CentroDeCus
 class ItemNotaInline(admin.TabularInline):
     model = ItemNota
     extra = 1
+    fields = ['produto', 'quantidade', 'valor_unitario', 'valor_total']
+    readonly_fields = ['valor_total']  # Campo calculado como somente leitura
 
 class RateioNotaInline(admin.TabularInline):
     model = RateioNota
@@ -11,16 +13,22 @@ class RateioNotaInline(admin.TabularInline):
 
 class NotaAdmin(admin.ModelAdmin):
     list_display = ('numero', 'data_emissao', 'emitente', 'destinatario', 'natureza_operacao', 'status', 'categoria')
+    list_filter = ('data_emissao', 'status')
+    search_fields = ('numero', 'emitente__nome_razao_social', 'chave_acesso')
     inlines = [ItemNotaInline, RateioNotaInline]
+    autocomplete_fields = ['emitente', 'destinatario']  # Utilizar campos de autocomplete para melhorar a usabilidade
+
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('descricao', 'quantidade', 'unidade', 'valor_unitario', 'valor_total', 'codigo', 'ncm_sh')
 
 class EmitenteAdmin(admin.ModelAdmin):
     list_display = ('nome_razao_social', 'cnpj', 'inscricao_estadual', 'endereco')
+    search_fields = ['nome_razao_social', 'cnpj']  # Definição dos campos de busca para autocomplete
 
 class DestinatarioAdmin(admin.ModelAdmin):
     list_display = ('nome_razao_social', 'cpf_cnpj', 'endereco')
+    search_fields = ['nome_razao_social', 'cpf_cnpj']  # Definição dos campos de busca para autocomplete
 
 class CentroDeCustoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'descricao')

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Notas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1>Consulta de Notas</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nota Número</th>
+            <th>Data Emissão</th>
+            <th>Valor Total da Nota</th>
+            <th>Total Rateio</th>
+            <th>Rateio Correto</th>
+            <th>Detalhes Centro de Custo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for nota in notas_detalhes %}
+          <tr class="{% if nota.rateio_correto %}table-success{% else %}table-danger{% endif %}">
+            <td>{{ nota.nota.numero }}</td>
+            <td>{{ nota.nota.data_emissao }}</td>
+            <td>{{ nota.nota.valor_total }}</td>
+            <td>{{ nota.total_rateio }}</td>
+            <td>{{ nota.rateio_correto|yesno:"Sim,Não" }}</td>
+            <td>
+              {% for rateio in nota.nota.rateios.all %} {{ rateio.centro_de_custo.nome }}: {{ rateio.valor }}
+              <br />
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

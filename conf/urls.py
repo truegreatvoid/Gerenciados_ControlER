@@ -1,7 +1,7 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
-    # path('', include('gestao_notas.urls', namespace='gestao_notas')),
+    path('gestao-notas/', include(('gestao_notas.urls', 'gestao_notas')), name='gestao_notas'),
     path('ceo-controler/', admin.site.urls),
 ]
