@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="container mt-3">
+  <h1>Adicionar Recebimento</h1>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+
+    <h3>Pagamentos</h3>
+    <div id="pagamento-form-list">
+      {{ pagamentos.management_form }} {% for form in pagamentos.forms %}
+      <div class="pagamento-form">
+        {{ form.as_p }}
+        <button type="button" class="remove-form-btn btn btn-outline-danger">Remover</button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{% url 'gestao_notas:recebimento_list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,10 +1,36 @@
 from django.urls import path
-from .views import NotaListView, exportar_xlsx, exportar_pdf
+from .views import *
 
 app_name = 'gestao_notas'
 
 urlpatterns = [
-    path('consultar-notas/', NotaListView.as_view(), name='consultar_notas'),
+    path('notas/', NotaListView.as_view(), name='nota_list'),
+    path('notas/<int:pk>/', NotaDetailView.as_view(), name='nota_detail'),
+    path('notas/nova/', NotaCreateView.as_view(), name='nota_create'),  # URL para criar uma nova Nota
     path('exportar-xlsx/', exportar_xlsx, name='exportar_xlsx'),
     path('exportar-pdf/', exportar_pdf, name='exportar_pdf'),
-]   
+    path('notas/editar/<int:pk>/', NotaUpdateView.as_view(), name='nota_edit'),
+    path('notas/deletar/<int:pk>/', NotaDeleteView.as_view(), name='nota_delete'),
+
+
+    # URLs para Categoria
+    path('categorias/', CategoriaListView.as_view(), name='categoria_list'),
+    path('categorias/create/', CategoriaCreateView.as_view(), name='categoria_create'),
+    path('categorias/update/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_update'),
+    path('categorias/delete/<int:pk>/', CategoriaDeleteView.as_view(), name='categoria_delete'),
+    path('categorias/<int:pk>/', CategoriaDetailView.as_view(), name='categoria_detail'),
+
+    # # URLs para Destinatario
+    path('destinatarios/', DestinatarioListView.as_view(), name='destinatario_list'),
+    path('destinatarios/create/', DestinatarioCreateView.as_view(), name='destinatario_create'),
+    path('destinatarios/update/<int:pk>/', DestinatarioUpdateView.as_view(), name='destinatario_update'),
+    path('destinatarios/delete/<int:pk>/', DestinatarioDeleteView.as_view(), name='destinatario_delete'),
+    path('destinatarios/<int:pk>/', DestinatarioDetailView.as_view(), name='destinatario_detail'),
+
+    # # URLs para Recebimento
+    path('recebimentos/', RecebimentoListView.as_view(), name='recebimento_list'),
+    path('recebimentos/create/', RecebimentoCreateView.as_view(), name='recebimento_create'),
+    path('recebimentos/update/<int:pk>/', RecebimentoUpdateView.as_view(), name='recebimento_update'),
+    path('recebimentos/delete/<int:pk>/', RecebimentoDeleteView.as_view(), name='recebimento_delete'),
+    path('recebimentos/<int:pk>/', RecebimentoDetailView.as_view(), name='recebimento_detail'),
+]

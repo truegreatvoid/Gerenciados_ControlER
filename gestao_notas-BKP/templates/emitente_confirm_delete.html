@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Confirmar Deleção de Emitente</title>
+  </head>
+  <body>
+    <h2>Tem certeza que deseja deletar {{ emitente.nome_razao_social }}?</h2>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Deletar</button>
+    </form>
+    <a href="{% url 'gestao_notas:emitente_list' %}">Cancelar</a>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="container mt-3">
+  <h2>Detalhes da Nota: {{ nota.numero }}</h2>
+  <p>
+    <strong>Status:</strong>
+    <span class="badge {% if nota.status %}bg-light text-success{% else %}bg-light text-danger{% endif %}">{{ nota.status|yesno:"Ativo,Inativo" }}</span>
+  </p>
+  <p>
+    <strong>Data de Emissão:</strong>
+    <span class="badge bg-light text-dark">{{ nota.data_criacao }}</span>
+  </p>
+  <p>
+    <strong>Chave de Acesso:</strong>
+    {{ nota.chave_acesso }}
+  </p>
+
+  <p>
+    <strong>Série:</strong>
+    {{ nota.serie }}
+  </p>
+  <p>
+    <strong>Data de Emissão:</strong>
+    <span class="badge bg-light text-dark">{{ nota.data_emissao }}</span>
+  </p>
+  <p>
+    <strong>Chave de Acesso:</strong>
+    {{ nota.chave_acesso }}
+  </p>
+  <p>
+    <strong>Natureza de Operação:</strong>
+    {{ nota.natureza_operacao }}
+  </p>
+  <p>
+    <strong>Destinatário:</strong>
+    <span class="badge bg-light text-dark">{{ nota.destinatario }}</span>
+  </p>
+  <p>
+    <strong>CFOP:</strong>
+    {{ nota.cfop }}
+  </p>
+  <p>
+    <strong>Rateios:</strong>
+    <span class="badge bg-light text-dark"><small>{% for ratio in nota.ratios.all %} R${{ ratio.valor }} {% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</small></span>
+  </p>
+  <p>
+    <strong>Categória:</strong>
+    {{ nota.categoria }}
+  </p>
+  <p>
+    <strong>Informações Adicionais:</strong>
+    {{ nota.informacoes_adicionais }}
+  </p>
+  <p>
+    <strong>Valor Total:</strong>
+    R$ {{ nota.valor_total }}
+  </p>
+  <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'gestao_notas:nota_list' %}" class="btn btn-primary me-md-2"><small>Voltar à Lista de Notas</small></a>
+  </div>
+</div>
+
+{% endblock %}

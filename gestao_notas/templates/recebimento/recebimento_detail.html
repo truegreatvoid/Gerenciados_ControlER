@@ -1,0 +1,61 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="container mt-3">
+  <h1>Detalhes do Recebimento: {{ object.destinatario.nome }}</h1>
+  <p>
+    <strong>Data Vencimento:</strong>
+    {{ object.data_vencimento }}
+  </p>
+  <p>
+    <strong>Valor:</strong>
+    {{ object.valor }}
+  </p>
+  <p>
+    <strong>Parcelas:</strong>
+    {{ object.parcelas }}
+  </p>
+  <p>
+    <strong>Banco:</strong>
+    {{ object.banco }}
+  </p>
+  <p>
+    <strong>Data Criação:</strong>
+    {{ object.data_criacao }}
+  </p>
+
+  <p>
+    <strong>Parcelas</strong>
+ 
+    <div class="table-responsive">
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>Destinatário</th>
+            <th>Nª da Parcela</th>
+            <th>Valor da Parcela</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pagamento in recebimento.pagamentos.all %}
+          <tr>
+            <td>{{ pagamento.recebimento.destinatario.nome }}</td>
+            <td>{{ pagamento.numero_parcela }}</td>
+            <td>{{ pagamento.valor }}</td>
+            <td>{{ pagamento.pago }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2">Nenhum pagamento Encontrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+ 
+  </p>
+
+  <a href="{% url 'gestao_notas:recebimento_update' object.pk %}" class="btn btn-outline-secondary">Editar</a>
+  <a href="{% url 'gestao_notas:recebimento_delete' object.pk %}" class="btn btn-outline-danger">Excluir</a>
+  <a href="{% url 'gestao_notas:recebimento_list' %}" class="btn btn-outline-primary">Voltar à lista</a>
+</div>
+{% endblock %}

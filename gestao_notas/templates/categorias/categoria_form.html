@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="container mt-3">
+  <h1>{% if object %}Editar{% else %}Criar{% endif %} Categoria</h1>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{% url 'gestao_notas:categoria_list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lista de Emitentes</title>
+  </head>
+  <body>
+    <h2>Lista de Emitentes</h2>
+    <a href="{% url 'gestao_notas:emitente_create' %}">Adicionar Novo Emitente</a>
+
+    <ul>
+      {% for emitente in emitentes %}
+      <li>
+        {{ emitente.nome_razao_social }} -
+        <a href="{% url 'gestao_notas:emitente_update' emitente.pk %}">Editar</a>
+        |
+        <a href="{% url 'gestao_notas:emitente_delete' emitente.pk %}">Deletar</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
