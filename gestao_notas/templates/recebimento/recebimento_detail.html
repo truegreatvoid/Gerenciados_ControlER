@@ -3,23 +3,23 @@
   <h1>Detalhes do Recebimento: {{ object.destinatario.nome }}</h1>
   <p>
     <strong>Data Vencimento:</strong>
-    {{ object.data_vencimento }}
+    {{ object.data_vencimento|default:"-" }}
   </p>
   <p>
     <strong>Valor:</strong>
-    {{ object.valor }}
+    {{ object.valor|default:"-" }}
   </p>
   <p>
     <strong>Parcelas:</strong>
-    {{ object.parcelas }}
+    {{ object.parcelas|default:"-" }}
   </p>
   <p>
     <strong>Banco:</strong>
-    {{ object.banco }}
+    {{ object.banco|default:"-" }}
   </p>
   <p>
     <strong>Data Criação:</strong>
-    {{ object.data_criacao }}
+    {{ object.data_criacao|default:"-" }}
   </p>
 
   <p>
@@ -38,10 +38,10 @@
         <tbody>
           {% for pagamento in recebimento.pagamentos.all %}
           <tr>
-            <td>{{ pagamento.recebimento.destinatario.nome }}</td>
-            <td>{{ pagamento.numero_parcela }}</td>
-            <td>{{ pagamento.valor }}</td>
-            <td>{{ pagamento.pago }}</td>
+            <td>{{ pagamento.recebimento.destinatario|default:"-" }}</td>
+            <td>{{ pagamento.numero_parcela|default:"-" }}</td>
+            <td>{{ pagamento.valor|default:"-" }}</td>
+            <td>{{ pagamento.pago|default:"-" }}</td>
           </tr>
           {% empty %}
           <tr>

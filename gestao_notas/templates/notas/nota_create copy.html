@@ -1,0 +1,60 @@
+{% extends 'base_generic.html' %} {% block content %}
+<div class="container mt-3">
+  <h2>Criar Nota</h2>
+  <form method="post" id="notaForm">
+    {% csrf_token %} {{ form.as_p }}
+    <h3>Ratios</h3>
+    <div id="ratio-form-list">
+      {{ ratios.management_form }} {% for form in ratios.forms %}
+      <div class="ratio-form">
+        {{ form.as_p }}
+        <button type="button" class="remove-form-btn btn btn-outline-danger">Remover</button>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+      <button type="button" id="add-more" class="btn btn-outline-primary me-md-2">Adicionar Ratio</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="{% url 'gestao_notas:nota_list' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(function() {
+      var formCount = {{ ratios.total_form_count }};
+      var $ratioList = $('#ratio-form-list');
+      var emptyForm = $('.ratio-form').first().clone();  // Clona o primeiro form para usar como template
+
+      // Limpa os campos do form clonado
+      emptyForm.find('input').each(function() {
+          $(this).val('');
+      });
+
+      // Adicionar novo form
+      $('#add-more').click(function() {
+          var newForm = emptyForm.clone();
+          newForm.find('input, select').each(function() {
+              var name = $(this).attr('name').replace('__prefix__', formCount);
+              var id = 'id_' + name;
+              $(this).attr({'name': name, 'id': id});
+          });
+          newForm.find('label').each(function() {
+              var newFor = $(this).attr('for').replace('__prefix__', formCount);
+              $(this).attr('for', newFor);
+          });
+          newForm.append('<button type="button" class="remove-form-btn">Remover</button>');
+          $ratioList.append(newForm);
+          $('#id_ratios-TOTAL_FORMS').val(++formCount);
+      });
+
+      // Remover form
+      $ratioList.on('click', '.remove-form-btn', function() {
+          $(this).parent().remove();
+          formCount--;
+          $('#id_ratios-TOTAL_FORMS').val(formCount);
+      });
+  });
+</script>
+
+{% endblock %}

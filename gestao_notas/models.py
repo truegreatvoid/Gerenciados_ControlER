@@ -29,7 +29,7 @@ class Nota(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
-
+    
 
 class Ratio(models.Model):
     valor = models.IntegerField()
@@ -39,9 +39,23 @@ class Ratio(models.Model):
 class Categoria(models.Model):
     nome = models.CharField(max_length=255)
 
+    def __str__(self):
+        return f"{self.nome}"
+
+class Cliente(models.Model):
+    cliente = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.cliente
+
 class Destinatario(models.Model):
-    nome = models.CharField(max_length=255)
-    documento = models.CharField(max_length=20)
+    cliente = models.ForeignKey('Cliente', related_name='destinatarios', on_delete=models.CASCADE)
+    obra = models.CharField(max_length=255)
+    competencia = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.cliente} - {self.obra} - {self.competencia}"
+
 
 
 class Recebimento(models.Model):

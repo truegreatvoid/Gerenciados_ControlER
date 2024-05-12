@@ -1,5 +1,7 @@
+from django.contrib import admin
 from django.urls import path
 from .views import *
+from django.contrib.auth.views import LogoutView
 
 app_name = 'gestao_notas'
 
@@ -12,6 +14,7 @@ urlpatterns = [
     path('notas/editar/<int:pk>/', NotaUpdateView.as_view(), name='nota_edit'),
     path('notas/deletar/<int:pk>/', NotaDeleteView.as_view(), name='nota_delete'),
 
+    path('add-nota/', NotaCreateView.as_view(), name='add-nota'),
 
     # URLs para Categoria
     path('categorias/', CategoriaListView.as_view(), name='categoria_list'),
@@ -27,10 +30,21 @@ urlpatterns = [
     path('destinatarios/delete/<int:pk>/', DestinatarioDeleteView.as_view(), name='destinatario_delete'),
     path('destinatarios/<int:pk>/', DestinatarioDetailView.as_view(), name='destinatario_detail'),
 
+    # # URLs para Clientes
+    path('cliente/', ClienteListView.as_view(), name='cliente_list'),
+    path('cliente/create/', ClienteCreateView.as_view(), name='cliente_create'),
+    path('cliente/update/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_update'),
+    path('cliente/delete/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_delete'),
+    path('cliente/<int:pk>/', ClienteDetailView.as_view(), name='cliente_detail'),
+
     # # URLs para Recebimento
     path('recebimentos/', RecebimentoListView.as_view(), name='recebimento_list'),
     path('recebimentos/create/', RecebimentoCreateView.as_view(), name='recebimento_create'),
     path('recebimentos/update/<int:pk>/', RecebimentoUpdateView.as_view(), name='recebimento_update'),
     path('recebimentos/delete/<int:pk>/', RecebimentoDeleteView.as_view(), name='recebimento_delete'),
     path('recebimentos/<int:pk>/', RecebimentoDetailView.as_view(), name='recebimento_detail'),
+
+    #login/logout
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
 ]

@@ -47,24 +47,24 @@
           <td class="text-center">
             <span class="badge {% if nota.status %}bg-light text-success{% else %}bg-light text-danger{% endif %}">{{ nota.status|yesno:"Ativo,Inativo" }}</span>
           </td>
-          <td class="text-center">{{ nota.numero }}</td>
-          <td class="text-center">{{ nota.serie }}</td>
-          <td class="text-center"><span class="badge bg-light text-dark">{{ nota.data_emissao }}</span></td>
+          <td class="text-center">{{ nota.numero|default:"-" }}</td>
+          <td class="text-center">{{ nota.serie|default:"-" }}</td>
+          <td class="text-center"><span class="badge bg-light text-dark">{{ nota.data_emissao|default:"-" }}</span></td>
 
-          <td class="text-center">{{ nota.chave_acesso }}</td>
-          <td class="text-center">{{ nota.natureza_operacao }}</td>
-          <td class="text-center"><span class="badge bg-light text-dark">{% if nota.destinatario %} {{ nota.destinatario.nome }} {% else %} Sem destinatário {% endif %}</span></td>
-          <td class="text-center">{{ nota.cfop }}</td>
-
-          <td class="text-center">
-            <span class="badge bg-light text-dark"><small>{% for ratio in nota.ratios.all %} R${{ ratio.valor }} {% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</small></span>
-          </td>
-          <td class="text-center">{% if nota.categoria %} {{ nota.categoria.nome }} {% else %} Sem categoria {% endif %}</td>
+          <td class="text-center">{{ nota.chave_acesso|default:"-" }}</td>
+          <td class="text-center">{{ nota.natureza_operacao|default:"-" }}</td>
+          <td class="text-center"><span class="badge bg-light text-dark">{% if nota.destinatario %} {{ nota.destinatario|default:"-" }} {% else %} Sem destinatário {% endif %}</span></td>
+          <td class="text-center">{{ nota.cfop|default:"-" }}</td>
 
           <td class="text-center">
-            <span class="badge bg-light text-dark"><small>{{ nota.informacoes_adicionais }}</small></span>
+            <span class="badge bg-light text-dark"><small>{% for ratio in nota.ratios.all %} R${{ ratio.valor|default:"-" }} {% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</small></span>
           </td>
-          <td class="text-center"><span class="badge bg-light text-primary">R$ {{ nota.valor_total }}</span></td>
+          <td class="text-center">{% if nota.categoria %} {{ nota.categoria.nome|default:"-" }} {% else %} Sem categoria {% endif %}</td>
+
+          <td class="text-center">
+            <span class="badge bg-light text-dark"><small>{{ nota.informacoes_adicionais|default:"-" }}</small></span>
+          </td>
+          <td class="text-center"><span class="badge bg-light text-primary">R$ {{ nota.valor_total|default:"-" }}</span></td>
 
           <!-- <td>{% for ratio in nota.ratios.all %} {{ ratio.valor }} ({{ ratio.descricao }}){% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</td> -->
 

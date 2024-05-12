@@ -3,73 +3,32 @@ from django.forms import inlineformset_factory, ModelForm
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm
 
-from django.core.exceptions import ValidationError
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Usuário'}), label='')
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}), label='')
 
 
-
 class NotaForm(forms.ModelForm):
     class Meta:
         model = Nota
-        fields = '__all__'  # ou especifique campos específicos
-        widgets = {
-            'numero': forms.TextInput(attrs={'class': 'form-control'}),
-            'serie': forms.TextInput(attrs={'class': 'form-control'}),
-            'data_emissao': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'chave_acesso': forms.TextInput(attrs={'class': 'form-control'}),
-            'natureza_operacao': forms.TextInput(attrs={'class': 'form-control'}),
-            'destinatario': forms.Select(attrs={'class': 'form-control'}),
-            'cfop': forms.TextInput(attrs={'class': 'form-control'}),
-            'informacoes_adicionais': forms.Textarea(attrs={'class': 'form-control'}),
-            'categoria': forms.Select(attrs={'class': 'form-control'}),
-            'valor_total': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
-    # def __init__(self, *args, **kwargs):
-    #     super(NotaForm, self).__init__(*args, **kwargs)
-    #     for field_name, field in self.fields.items():
-    #         field.widget.attrs['class'] = 'form-control'
+        fields = ['numero', 'serie', 'data_emissao', 'chave_acesso', 'natureza_operacao', 'destinatario', 'cfop', 'informacoes_adicionais', 'categoria', 'valor_total']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        valor_total = cleaned_data.get('valor_total')
-        ratios = self.cleaned_data.get('ratios')
-        
-        if ratios and sum(ratio.cleaned_data.get('valor', 0) for ratio in ratios) != valor_total:
-            raise ValidationError("A soma dos valores dos ratios deve igualar o valor total da nota.")
+    def __init__(self, *args, **kwargs):
+        super(NotaForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
-class RatioForm(forms.ModelForm):
+class RatioForm(ModelForm):
     class Meta:
         model = Ratio
-        fields = '__all__'
-        widgets = {
-            'valor': forms.NumberInput(attrs={'class': 'form-control'}),
-            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-RatioFormSet = forms.inlineformset_factory(Nota, Ratio, form=RatioForm, fields=('valor', 'descricao'), extra=0, can_delete=True)
-# RatioFormSet = inlineformset_factory(Nota, Ratio, fields=('valor', 'descricao'), extra=0, can_delete=True)
+        fields = ['valor', 'descricao']
 
-# class NotaForm(forms.ModelForm):
-#     class Meta:
-#         model = Nota
-#         fields = ['numero', 'serie', 'data_emissao', 'chave_acesso', 'natureza_operacao', 'destinatario', 'cfop', 'informacoes_adicionais', 'categoria', 'valor_total']
-
-#     def __init__(self, *args, **kwargs):
-#         super(NotaForm, self).__init__(*args, **kwargs)
-#         for field_name, field in self.fields.items():
-#             field.widget.attrs['class'] = 'form-control'
-
-# class RatioForm(ModelForm):
-#     class Meta:
-#         model = Ratio
-#         fields = ['valor', 'descricao']
-
-#     def __init__(self, *args, **kwargs):
-#         super(RatioForm, self).__init__(*args, **kwargs)
-#         for field_name, field in self.fields.items():
-#             field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs):
+        super(RatioForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 # Formset para os objetos Ratio relacionados à Nota
 # RatioFormSet = inlineformset_factory(
@@ -79,7 +38,7 @@ RatioFormSet = forms.inlineformset_factory(Nota, Ratio, form=RatioForm, fields=(
 #     Nota, Ratio, form=RatioForm, fields=('valor', 'descricao'), extra=1, can_delete=True
 # )
 
-# RatioFormSet = inlineformset_factory(Nota, Ratio, form=RatioForm, extra=1, can_delete=True)
+RatioFormSet = inlineformset_factory(Nota, Ratio, form=RatioForm, extra=1, can_delete=True)
 
 class CategoriaForm(forms.ModelForm):
     class Meta:

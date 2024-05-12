@@ -1,9 +1,13 @@
 {% extends "base_generic.html" %} {% block content %}
 <div class="container mt-3">
-  <h1>Detalhes do Destinatário: {{ object.nome }}</h1>
+  <h1>Detalhes do Destinatário: {{ object.Cliente }}</h1>
   <p>
-    <strong>Documento:</strong>
-    {{ object.documento }}
+    <strong>Obra:</strong>
+    {{ object.obra|default:"-" }}
+  </p>
+  <p>
+    <strong>Competência:</strong>
+    {{ object.competencia|default:"-" }}
   </p>
   <a href="{% url 'gestao_notas:destinatario_update' object.pk %}" class="btn btn-outline-secondary">Editar</a>
   <a href="{% url 'gestao_notas:destinatario_delete' object.pk %}" class="btn btn-outline-danger">Excluir</a>

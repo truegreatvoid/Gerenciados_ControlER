@@ -31,8 +31,8 @@ class RecebimentoPagtInline(admin.TabularInline):
 
 # Administração simplificada para Destinatario
 class DestinatarioAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'documento']
-    search_fields = ['nome', 'documento']
+    list_display = ['cliente', 'obra', 'competencia']
+    search_fields = ['cliente', 'obra', 'competencia']
 
 # Configurações do Admin para o modelo Recebimento
 class RecebimentoAdmin(admin.ModelAdmin):

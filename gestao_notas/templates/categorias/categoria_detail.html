@@ -3,7 +3,7 @@
   <h1>Detalhes da Categoria: {{ object.nome }}</h1>
   <p>
     <strong>Nome:</strong>
-    {{ object.nome }}
+    {{ object.nome|default:"-" }}
   </p>
   <a href="{% url 'gestao_notas:categoria_update' object.pk %}" class="btn btn-outline-secondary">Editar</a>
   <a href="{% url 'gestao_notas:categoria_delete' object.pk %}" class="btn btn-outline-danger">Excluir</a>

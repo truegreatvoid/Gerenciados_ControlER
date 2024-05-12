@@ -1,58 +1,58 @@
 {% extends "base_generic.html" %} {% block content %}
 <div class="container mt-3">
-  <h2>Detalhes da Nota: {{ nota.numero }}</h2>
+  <h2>Detalhes da Nota: {{ nota.numero|default:"-" }}</h2>
   <p>
     <strong>Status:</strong>
     <span class="badge {% if nota.status %}bg-light text-success{% else %}bg-light text-danger{% endif %}">{{ nota.status|yesno:"Ativo,Inativo" }}</span>
   </p>
   <p>
     <strong>Data de Emissão:</strong>
-    <span class="badge bg-light text-dark">{{ nota.data_criacao }}</span>
+    <span class="badge bg-light text-dark">{{ nota.data_criacao|default:"-" }}</span>
   </p>
   <p>
     <strong>Chave de Acesso:</strong>
-    {{ nota.chave_acesso }}
+    {{ nota.chave_acesso|default:"-" }}
   </p>
 
   <p>
     <strong>Série:</strong>
-    {{ nota.serie }}
+    {{ nota.serie|default:"-" }}
   </p>
   <p>
     <strong>Data de Emissão:</strong>
-    <span class="badge bg-light text-dark">{{ nota.data_emissao }}</span>
+    <span class="badge bg-light text-dark">{{ nota.data_emissao|default:"-" }}</span>
   </p>
   <p>
     <strong>Chave de Acesso:</strong>
-    {{ nota.chave_acesso }}
+    {{ nota.chave_acesso|default:"-" }}
   </p>
   <p>
     <strong>Natureza de Operação:</strong>
-    {{ nota.natureza_operacao }}
+    {{ nota.natureza_operacao|default:"-" }}
   </p>
   <p>
     <strong>Destinatário:</strong>
-    <span class="badge bg-light text-dark">{{ nota.destinatario }}</span>
+    <span class="badge bg-light text-dark">{{ nota.destinatario|default:"-" }}</span>
   </p>
   <p>
     <strong>CFOP:</strong>
-    {{ nota.cfop }}
+    {{ nota.cfop|default:"-" }}
   </p>
   <p>
     <strong>Rateios:</strong>
-    <span class="badge bg-light text-dark"><small>{% for ratio in nota.ratios.all %} R${{ ratio.valor }} {% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</small></span>
+    <span class="badge bg-light text-dark"><small>{% for ratio in nota.ratios.all %} R${{ ratio.valor|default:"-" }} {% if not forloop.last %}, {% endif %} {% empty %} Nenhum ratio {% endfor %}</small></span>
   </p>
   <p>
     <strong>Categória:</strong>
-    {{ nota.categoria }}
+    {{ nota.categoria|default:"-" }}
   </p>
   <p>
     <strong>Informações Adicionais:</strong>
-    {{ nota.informacoes_adicionais }}
+    {{ nota.informacoes_adicionais|default:"-" }}
   </p>
   <p>
     <strong>Valor Total:</strong>
-    R$ {{ nota.valor_total }}
+    R$ {{ nota.valor_total|default:"-" }}
   </p>
   <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
     <a href="{% url 'gestao_notas:nota_list' %}" class="btn btn-primary me-md-2"><small>Voltar à Lista de Notas</small></a>

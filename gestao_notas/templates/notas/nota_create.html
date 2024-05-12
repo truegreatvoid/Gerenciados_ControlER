@@ -1,60 +1,43 @@
 {% extends 'base_generic.html' %} {% block content %}
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    var formCount = parseInt("{{ ratios.total_form_count }}");
+    var addButton = document.getElementById("add-ratio-button");
+    var formContainer = document.getElementById("ratio-forms-container");
+    var valorTotalInput = document.getElementById("id_valor_total");
+    var form = document.querySelector("form");
+
+    addButton.addEventListener("click", function () {
+      var newForm = "{{ ratios.empty_form.as_p|escapejs }}";
+      newForm = newForm.replace(/__prefix__/g, formCount);
+      formContainer.insertAdjacentHTML("beforeend", newForm);
+      document.getElementById("id_ratios-TOTAL_FORMS").value = formCount + 1;
+      formCount++;
+    });
+
+    form.addEventListener("submit", function (event) {
+      var totalRatios = 0;
+      document.querySelectorAll(".ratio-valor-input").forEach(function (input) {
+        totalRatios += parseFloat(input.value) || 0;
+      });
+
+      if (totalRatios !== parseFloat(valorTotalInput.value)) {
+        event.preventDefault(); // Impede o envio do formulário
+        alert("A soma dos valores dos rateios deve ser igual ao valor total.");
+      }
+    });
+  });
+</script>
 <div class="container mt-3">
-  <h2>Criar Nota</h2>
-  <form method="post" id="notaForm">
+  <h1 class="pb-4">Criar Nota</h1>
+  <form method="post">
     {% csrf_token %} {{ form.as_p }}
-    <h3>Ratios</h3>
-    <div id="ratio-form-list">
-      {{ ratios.management_form }} {% for form in ratios.forms %}
-      <div class="ratio-form">
-        {{ form.as_p }}
-        <button type="button" class="remove-form-btn btn btn-outline-danger">Remover</button>
-      </div>
-      {% endfor %}
-    </div>
+    <div id="ratio-forms-container">{{ ratios.management_form }}</div>
     <div class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
-      <button type="button" id="add-more" class="btn btn-outline-primary me-md-2">Adicionar Ratio</button>
-      <button type="submit" class="btn btn-primary">Salvar</button>
+      <button type="button" id="add-ratio-button" class="btn btn-outline-primary me-md-2">Adicionar Ratio</button>
+      <button type="submit" class="btn btn-primary">Salvar Nota</button>
       <a href="{% url 'gestao_notas:nota_list' %}" class="btn btn-secondary">Cancelar</a>
     </div>
   </form>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(function() {
-      var formCount = {{ ratios.total_form_count }};
-      var $ratioList = $('#ratio-form-list');
-      var emptyForm = $('.ratio-form').first().clone();  // Clona o primeiro form para usar como template
-
-      // Limpa os campos do form clonado
-      emptyForm.find('input').each(function() {
-          $(this).val('');
-      });
-
-      // Adicionar novo form
-      $('#add-more').click(function() {
-          var newForm = emptyForm.clone();
-          newForm.find('input, select').each(function() {
-              var name = $(this).attr('name').replace('__prefix__', formCount);
-              var id = 'id_' + name;
-              $(this).attr({'name': name, 'id': id});
-          });
-          newForm.find('label').each(function() {
-              var newFor = $(this).attr('for').replace('__prefix__', formCount);
-              $(this).attr('for', newFor);
-          });
-          newForm.append('<button type="button" class="remove-form-btn">Remover</button>');
-          $ratioList.append(newForm);
-          $('#id_ratios-TOTAL_FORMS').val(++formCount);
-      });
-
-      // Remover form
-      $ratioList.on('click', '.remove-form-btn', function() {
-          $(this).parent().remove();
-          formCount--;
-          $('#id_ratios-TOTAL_FORMS').val(formCount);
-      });
-  });
-</script>
-
 {% endblock %}

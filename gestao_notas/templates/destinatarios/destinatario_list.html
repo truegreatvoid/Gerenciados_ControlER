@@ -8,15 +8,17 @@
     <table class="table mt-3">
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>Documento</th>
+          <th>Cliente</th>
+          <th>Obra</th>
+          <th>Competência</th>
         </tr>
       </thead>
       <tbody>
         {% for destinatario in object_list %}
         <tr>
-          <td>{{ destinatario.nome }}</td>
-          <td>{{ destinatario.documento }}</td>
+          <td>{{ destinatario.cliente|default:"-" }}</td>
+          <td>{{ destinatario.obra|default:"-" }}</td>
+          <td>{{ destinatario.competencia|default:"-" }}</td>
           <td class="text-end">
             <a href="{% url 'gestao_notas:destinatario_detail' destinatario.pk %}" class="btn btn-outline-dark" width="14" height="14" title="Ver Detalhes">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

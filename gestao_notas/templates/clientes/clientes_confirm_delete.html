@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="container mt-3">
+  <h1>Excluir Cliente</h1>
+  <p>Tem certeza de que deseja excluir "{{ object.cliente }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a href="{% url 'gestao_notas:cliente_list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

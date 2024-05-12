@@ -28,9 +28,18 @@
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
       <a href="{% url 'gestao_notas:nota_list' %}" class="navbar-brand col-md-3 col-lg-2 me-0 px-3">Cabana Construções - Gerencial</a>
       <span id="horaAtual" class="text-light ms-auto me-3 d-none d-md-block"></span>
+
+      <form action="{% url 'gestao_notas:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary px-1 py-0 me-2">Sair</button>
+      </form>
     </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
+        <!-- Botão de toggle para o navbar colapsado -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -41,6 +50,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{% url 'gestao_notas:nota_create' %}">Cadastro</a></li>
                 <li><a class="dropdown-item" href="#">Relatório</a></li>
+                <li><a class="dropdown-item" href="{% url 'gestao_notas:cliente_list' %}">Cliente</a></li>
                 <li><a class="dropdown-item" href="{% url 'gestao_notas:destinatario_list' %}">Destinatário</a></li>
                 <li><a class="dropdown-item" href="{% url 'gestao_notas:categoria_list' %}">Categoria</a></li>
               </ul>

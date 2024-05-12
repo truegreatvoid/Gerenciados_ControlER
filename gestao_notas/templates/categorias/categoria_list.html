@@ -14,7 +14,7 @@
       <tbody>
         {% for categoria in object_list %}
         <tr>
-          <td>{{ categoria.nome }}</td>
+          <td>{{ categoria.nome|default:"-" }}</td>
           <td class="text-end">
             <a href="{% url 'gestao_notas:categoria_detail' categoria.pk %}" class="btn btn-outline-dark" width="14" height="14" title="Ver Detalhes">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
