@@ -45,6 +45,6 @@ urlpatterns = [
     path('recebimentos/<int:pk>/', RecebimentoDetailView.as_view(), name='recebimento_detail'),
 
     #login/logout
-    path('login/', CustomLoginView.as_view(), name='login'),
+    path('', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
 ]
